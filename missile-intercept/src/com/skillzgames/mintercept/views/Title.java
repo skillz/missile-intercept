@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.skillz.android.client.Skillz;
 import com.skillzgames.mintercept.Explosions;
 import com.skillzgames.mintercept.MIntercept;
 import com.skillzgames.mintercept.Overlay;
@@ -22,7 +23,7 @@ import com.skillzgames.mintercept.common.Element;
 public class Title extends Scene {
     private class Demo extends Element {
         View view;
-        BitmapDrawable copyright, instructions, logo;
+        BitmapDrawable copyright, instructions, tournaments, logo;
         int instruction_pos, copyright_pos;
         Rect location = new Rect();
         Explosions explosions;
@@ -33,6 +34,7 @@ public class Title extends Scene {
             copyright = new BitmapDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.copyright));
             copyright_pos = -copyright.getMinimumWidth();
             instructions = new BitmapDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.instructions));
+            tournaments = new BitmapDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.play_with_friends));
             instruction_pos = -instructions.getMinimumWidth();
             logo = new BitmapDrawable(BitmapFactory.decodeResource(getResources(), R.drawable.logo));
             explosions = new Explosions(35, 35);
@@ -58,6 +60,7 @@ public class Title extends Scene {
         @Override
         public void draw(Canvas c, Layer layer) {
             if ( layer == Layer.BACKGROUND ) {
+
                 location.left = copyright_pos;
                 location.right = location.left + copyright.getMinimumWidth();
                 location.top = view.getHeight() - copyright.getMinimumHeight();
@@ -78,12 +81,31 @@ public class Title extends Scene {
                 location.bottom = location.top + instructions.getMinimumHeight();
                 instructions.setBounds(location);
                 instructions.draw(c);
+                
+                location.left = (view.getWidth() - tournaments.getMinimumWidth()) / 2;
+                location.right = location.left + tournaments.getMinimumWidth();
+                location.top = getTournamentsTop();
+                location.bottom = location.top + tournaments.getMinimumHeight();
+                tournaments.setBounds(location);
+                tournaments.draw(c);
             }
             explosions.draw(c, layer);
         }
         
+        private int getTournamentsTop() {
+        	int h = getHeight(), instructionsHeight = instructions.getBounds().height();
+        	
+        	return h / 2 + instructionsHeight 
+        			+ (h / 2 
+	        			- copyright.getBounds().height() 
+	        			- tournaments.getBounds().height() 
+	        			- instructionsHeight) / 2;
+        }
     };
     Demo demo;
+    
+    
+
 
     WeakReference<MIntercept> mintercept;
     public Title(MIntercept mintercept) {
@@ -98,6 +120,7 @@ public class Title extends Scene {
     public void reset() {
     	
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -116,7 +139,12 @@ public class Title extends Scene {
     public boolean onTouchEvent(MotionEvent event) {
         if ( !overlay.onTouchEvent(event) ) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            	 mintercept.get().startGame();
+            	 int top = demo.getTournamentsTop();
+            	 if (event.getY() > top && event.getY() < top + 48) {
+            		 Skillz.startSkillzActivity(mintercept.get());
+            	 } else {
+            	     mintercept.get().startGame();
+            	 }
                  return true;
             } else {
                 return false;
