@@ -48,7 +48,7 @@ public class Opponent extends Element {
         public boolean tick() {
             if ( inuse ) {
                 if ( dy == 0 && !exploding ) {
-                    dx = 0; dy = 2f + game.level.getValue() / 5f;
+                    dx = 0; dy = 10f + game.level.getValue() / 5f;
                     sx = random.nextInt(view.getWidth());
                     sy = game.missiles.getTotalHeight() + 1;
                     if ( random.nextInt(6) == 1 ) {
