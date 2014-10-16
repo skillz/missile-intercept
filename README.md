@@ -2,6 +2,8 @@
 
 This repo contains an example [Skillz](http://skillz.com) Android integration using a simple Missle Defender clone. The Skillz SDK is not included in this project and should be download on the [Skillz Developer Portal](https://skillz.com/developer/downloads).
 
+[<img src="http://i.vimeocdn.com/video/493026462_640.jpg">](https://vimeo.com/109143650)
+
 ## Building
 
 1. Import to Android Studio using **File -> Import Project**.
