@@ -6,9 +6,27 @@
         android:versionCode="6"
         android:versionName="0.5.1"
     >
-    	
-    <uses-permission android:name="android.permission.VIBRATE" />
-	
+
+    <!-- Required by Skillz -->
+    <permission android:name="com.skillzgames.mintercept.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+
+    <!-- Required by Skillz -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Used throughout application -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- Used to check network status -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- Used by PayPal -->
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- Used for notifications -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Required for cash play -->
+    <uses-permission android:name="android.permission.READ_CONTACTS"/> <!-- Used for gamers feature -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Used for notifications -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/> <!-- Used for notifications -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Used for profile picture uploads -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- Used for Fiksu -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- Used for GCM, and google sign-in -->
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" /> <!-- Google Sign-in -->
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" /> <!-- Google Sign-in -->
+    <uses-permission android:name="com.android.vending.BILLING" /> <!-- in-app billing -->
+    <uses-permission android:name="com.skillzgames.mintercept.permission.C2D_MESSAGE" />  <!-- Used for notifications -->
+
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:hardwareAccelerated="true">
         <activity android:name="MIntercept">
             <intent-filter>
@@ -16,7 +34,86 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-		    	
+
+        <!-- Required by Skillz -->
+        <service android:enabled="true" android:name="com.skillz.android.core.SkillzClientService" android:exported="false" />
+        <service android:enabled="true" android:name="com.skillz.android.gcm.SGCMIntentService" android:exported="false" />
+        <service android:enabled="true" android:name="com.skillz.android.core.SkillzDeviceService" android:exported="true">
+            <intent-filter>
+                <action android:name="com.skillz.android.core.DeviceManager.getId" />
+            </intent-filter>
+        </service>
+        <service android:name="com.paypal.android.sdk.payments.PayPalService" android:exported="false" />
+
+        <!-- Required by Skillz -->
+        <activity android:name="com.skillz.android.client.ui.AuthenticationActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:launchMode="singleTop" />
+        <activity android:name="com.skillz.android.client.ui.HomeActivity" android:theme="@android:style/Theme.NoTitleBar" android:launchMode="singleTop" />
+        <activity android:name="com.skillz.android.client.ui.ManagerJamesActivity" android:theme="@android:style/Theme.NoTitleBar" android:noHistory="true" android:excludeFromRecents="true" />
+        <activity android:name="com.skillz.android.client.ui.DepositActivity" android:configChanges="orientation|screenSize" android:windowSoftInputMode="adjustPan" android:screenOrientation="behind" android:label="@string/skillz_i10_activity_label_deposit" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.SkillzDialogActivity" android:configChanges="orientation|screenSize" android:theme="@style/SkillzDialog" android:screenOrientation="behind" />
+        <activity android:name="com.skillz.android.client.ui.RootDialogActivity" android:configChanges="orientation|screenSize" android:theme="@style/SkillzDialog" android:screenOrientation="behind" />
+        <activity android:name="com.skillz.android.client.ui.TermsOfServiceDialogActivity" android:configChanges="orientation|screenSize" android:theme="@style/SkillzDialog" android:screenOrientation="behind" />
+        <activity android:name="com.skillz.android.client.ui.DepositSuccessDialogActivity" android:configChanges="orientation|screenSize" android:theme="@style/SkillzDialog" android:screenOrientation="behind" />
+        <activity android:name="com.skillz.android.client.ui.SubmitGameResultDialogActivity" android:configChanges="orientation|screenSize" android:theme="@style/SkillzDialog" android:screenOrientation="behind" android:noHistory="true" />
+        <activity android:name="com.skillz.android.client.ui.MenuDialogActivity" android:configChanges="orientation|screenSize" android:screenOrientation="behind" android:theme="@style/SkillzDialog" android:noHistory="false" />
+        <activity android:name="com.skillz.android.client.ui.WithdrawActivity" android:configChanges="orientation|keyboard|keyboardHidden|screenSize" android:screenOrientation="behind" android:label="@string/skillz_i10_activity_label_withdraw" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.ProfileActivity" android:configChanges="orientation|screenSize" android:screenOrientation="behind" android:label="@string/skillz_i10_activity_label_profile" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.ContactCustomerServiceActivity" android:launchMode="singleTop" android:screenOrientation="behind" android:windowSoftInputMode="adjustResize|stateAlwaysHidden" android:configChanges="orientation|screenSize" android:label="@string/skillz_i10_activity_label_customer_service" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.MyAccountActivity" android:configChanges="orientation|screenSize" android:windowSoftInputMode="adjustPan" android:launchMode="singleTop" android:screenOrientation="behind" android:label="@string/skillz_i10_activity_label_my_account" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.VerificationRequiredActivity" android:screenOrientation="behind" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.GamersActivity" android:label="@string/skillz_i10_activity_label_gamers" android:configChanges="orientation|screenSize" android:screenOrientation="behind" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.GamersSearchActivity" android:configChanges="orientation|screenSize" android:screenOrientation="behind" android:label="@string/skillz_i10_activity_label_gamers" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.GamersEmailActivity" android:configChanges="orientation|screenSize" android:screenOrientation="behind" android:label="@string/skillz_i10_activity_label_gamers" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.GamersEmailMultiActivity" android:configChanges="orientation|screenSize" android:screenOrientation="behind" android:label="@string/skillz_i10_activity_label_gamers" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.GamersInviteActivity" android:configChanges="orientation|screenSize" android:screenOrientation="behind" android:label="@string/skillz_i10_activity_label_gamers" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.UpdateUsernameActivity" android:windowSoftInputMode="adjustResize|stateAlwaysHidden" android:screenOrientation="behind" android:configChanges="orientation|screenSize" android:label="@string/skillz_i10_activity_label_update_username" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.UpdateUsernamePromptActivity" android:windowSoftInputMode="adjustResize|stateAlwaysHidden" android:screenOrientation="behind" android:configChanges="orientation|screenSize" android:label="@string/skillz_i11_activity_label_update_username_prompt" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.DepositOfferPromptActivity" android:windowSoftInputMode="adjustResize|stateAlwaysHidden" android:screenOrientation="behind" android:configChanges="orientation|screenSize" android:label="@string/skillz_i11_activity_label_deposit_offer_prompt" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.CongratsModalActivity" android:windowSoftInputMode="adjustResize|stateAlwaysHidden" android:screenOrientation="behind" android:launchMode="singleTop" android:configChanges="orientation|screenSize" android:label="@string/skillz_i4_activity_label_congrats" android:windowBackground="@color/skillz_congrats_background" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.TauntActivity" android:screenOrientation="behind" android:configChanges="orientation|screenSize" android:label="@string/skillz_i10_activity_label_profile" android:theme="@android:style/Theme.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.CashPinActivity" android:screenOrientation="behind" android:configChanges="orientation|screenSize" android:theme="@style/SkillzDialog" />
+        <activity android:name="com.skillz.android.client.ui.WelcomeBackActivity" android:windowSoftInputMode="adjustResize|stateAlwaysHidden" android:screenOrientation="behind" android:launchMode="singleTop" android:configChanges="orientation|screenSize" android:label="@string/skillz_i4_activity_label_congrats" android:windowBackground="@color/skillz_congrats_background" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.StoreActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity android:name="com.skillz.android.client.ui.VsActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name="com.skillz.android.client.ui.WelcomeToSkillzActivity" android:theme="@android:style/Theme.NoTitleBar" android:noHistory="true" android:excludeFromRecents="true" />
+        <activity android:name="com.skillz.android.client.ui.ZStoreActivity" android:configChanges="orientation|screenSize" android:windowSoftInputMode="adjustPan" android:screenOrientation="behind" android:label="Z Store" android:launchMode="singleTop" android:theme="@android:style/Theme.NoTitleBar" />
+
+        <activity android:name="com.paypal.android.MEP.PayPalActivity" android:windowSoftInputMode="adjustPan|stateAlwaysHidden" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:configChanges="keyboardHidden|orientation"/>
+        <activity android:name="com.paypal.android.sdk.payments.PaymentActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.LoginActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PaymentMethodActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PaymentConfirmActivity" />
+        <activity android:name="com.paypal.android.sdk.payments.PaymentCompletedActivity" />
+
+        <!-- Required by Skillz -->
+        <receiver android:name="com.skillz.android.client.BasicGameBroadcastReceiver" android:exported="false">
+            <intent-filter android:priority="1">
+                <action android:name="com.skillz.android.client.startGame" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.skillz.android.client.SkillzGCMReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.skillzgames.mintercept" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.skillz.android.core.analytics.ReferralReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Required by Skillz -->
+        <!-- Skillz Params -->
+        <meta-data android:name="com.skillz.ENVIRONMENT" android:value="SANDBOX" />
+        <meta-data android:name="com.skillz.GAME_ID" android:value="2" />
+        <meta-data android:name="com.skillz.GAME_SECRET" android:value="494a715f7e9b4071aca61bac42ca858a309524e5864f0920030862a4ae7589be" />
+        <meta-data android:name="com.skillz.GAME_ACTIVITY_CLASS" android:value="com.skillzgames.mintercept.MIntercept" />
+        <meta-data android:name="com.skillz.IS_UNITY" android:value="false" />
+        <meta-data android:name="com.skillz.ORIENTATION" android:value="DEFAULT" />
+        <meta-data android:name="com.skillz.IAB_PUBLIC_KEY" android:value="" />
+
     </application>
     
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="8"></uses-sdk>

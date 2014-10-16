@@ -1,5 +1,6 @@
 package com.skillzgames.mintercept;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import android.graphics.Canvas;
@@ -7,6 +8,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 
+import com.skillz.android.client.Skillz;
 import com.skillzgames.mintercept.common.Element;
 import com.skillzgames.mintercept.common.NumberPanel;
 
@@ -80,6 +82,16 @@ public class Game extends Element {
     public void over() {
     	context.gameStarted = false;
         isover = true;
+
+        //Skillz Integration - Report Final Score
+        if (context.skillzGame) {
+            context.skillzGame = false;
+
+            HashMap<String, String> metrics = new HashMap<String, String>();
+            metrics.put("score", String.valueOf(score.getValue()));
+
+            Skillz.reportFinalScore(context, metrics);
+        }
     }
     /**
      * Allows us to determine if the game is over.

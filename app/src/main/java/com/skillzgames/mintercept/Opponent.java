@@ -6,12 +6,14 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
 
+import com.skillz.android.client.Skillz;
 import com.skillzgames.mintercept.common.Element;
 
 
 public class Opponent extends Element {
     private static Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    private static Random random = new Random();
+    //Skillz Integration - Random
+    private static Random random = Skillz.getRandom();
 
     private class Missile extends Element {
         private MIntercept context;
