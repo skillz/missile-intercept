@@ -135,7 +135,7 @@ public class Title extends Scene {
         if ( !overlay.onTouchEvent(event) ) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 int top = demo.getTournamentsTop();
-                if (event.getY() > top && event.getY() < top + 48) {
+                if (event.getY() > top - 200 && event.getY() < top + 200) {
                     Skillz.startSkillzActivity(mintercept.get());
                 } else {
                     mintercept.get().startGame();
